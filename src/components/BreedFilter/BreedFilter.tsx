@@ -3,12 +3,12 @@ import styles from "./BreedFilter.module.scss";
 import fetchRequest from "../../axios/axios";
 import { BiDownArrow } from "react-icons/bi";
 
-interface IBreedFilter {
+interface IBreedFilterProps {
   setBreedsList: (arg: string[]) => void;
   chosenBreeds: string[];
 }
 
-export const BreedFilter: FC<IBreedFilter> = ({
+export const BreedFilter: FC<IBreedFilterProps> = ({
   setBreedsList,
   chosenBreeds,
 }) => {
@@ -20,7 +20,7 @@ export const BreedFilter: FC<IBreedFilter> = ({
   useEffect(() => {
     const getBreeds = async () => {
       try {
-        const { data: breeds } = await fetchRequest(`/dogs/breeds`);
+        const { data: breeds } = await fetchRequest<string[]>(`/dogs/breeds`);
         setAllBreeds(breeds);
       } catch (error) {
         console.log(error);

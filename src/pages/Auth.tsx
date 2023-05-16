@@ -4,6 +4,11 @@ import fetchRequest from "../axios/axios";
 import { useNavigate } from "react-router-dom";
 import "../App.scss";
 
+interface IUserData {
+  name: string;
+  email: string;
+}
+
 export const Auth: FC = () => {
   const navigate = useNavigate();
   const [name, setName] = useState<string>("");
@@ -12,28 +17,15 @@ export const Auth: FC = () => {
 
   const registerHandler = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    const userData = {
+    const userData: IUserData = {
       name,
       email,
     };
     try {
-      const res = await fetchRequest.post("/auth/login", userData);
+      await fetchRequest.post<string>("/auth/login", userData);
       navigate("/");
-      console.log(res);
-    } catch (error) {
+    } catch (error: AxiosError | any) {
       setError(error.message);
-
-      console.log(error);
-    }
-  };
-
-  const searchBread = async () => {
-    try {
-      const res = await fetchRequest("/dogs/breeds");
-
-      console.log(res);
-    } catch (error) {
-      console.log(error);
     }
   };
 
