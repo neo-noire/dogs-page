@@ -6,7 +6,6 @@ export const Header: FC = () => {
   return (
     <header>
       <h1>Dogs are best</h1>
-      <Geolocation />
       <Logout />
     </header>
   );

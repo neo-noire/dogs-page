@@ -7,6 +7,7 @@ import { BreedFilter } from "../../components/BreedFilter/BreedFilter";
 import ReactPaginate from "react-paginate";
 import styles from "./Main.module.scss";
 import { useNavigate } from "react-router";
+import { Geolocation } from "../../components/Geolocation/Geolocation";
 
 interface IDogsData {
   next?: string;
@@ -58,10 +59,15 @@ export const Main: FC = () => {
   const [sizePerPage, setSizePerPage] = useState<number>(10);
   const [currentPage, setCurrentPage] = useState<number>(0);
   const [sortBy, setSortBy] = useState(sortParams[0]);
+  const [zipCodes, setZipCodes] = useState<number[] | null>([]);
 
   useEffect(() => {
     const fetchDogsList = async () => {
       try {
+        const zip_code =
+          zipCodes && zipCodes?.length > 0
+            ? `&zipCodes=${zipCodes.join("&zipCodes=")}`
+            : "";
         const from =
           currentPage > 0 ? `&from=${currentPage * sizePerPage}` : "";
         const breedQuery = chosenBreeds.map((el) => `&breeds=${el}`).join("");
@@ -70,12 +76,13 @@ export const Main: FC = () => {
         const sort = `&sort=${sortBy.value.split("-").join("")}:`;
 
         const { data } = await fetchRequest(
-          `/dogs/search?${size}${breedQuery}${from}${sort}${order}`
+          `/dogs/search?${size}${breedQuery}${from}${sort}${order}${zip_code}`
         );
         setPageCount(data.total / sizePerPage);
         const dogsIds = data.resultIds;
         const res = await fetchRequest.post("/dogs", dogsIds);
         setDogs(res.data);
+        console.log(zip_code);
       } catch (error) {
         if (error.response.status === 401) {
           navigate("/login");
@@ -90,7 +97,7 @@ export const Main: FC = () => {
       top: 0,
       behavior: "smooth",
     });
-  }, [chosenBreeds, sizePerPage, currentPage, sortBy]);
+  }, [chosenBreeds, sizePerPage, currentPage, sortBy, zipCodes]);
 
   return (
     <>
@@ -101,6 +108,7 @@ export const Main: FC = () => {
             chosenBreeds={chosenBreeds}
             setBreedsList={setChosenBreeds}
           />
+          <Geolocation setZipCodes={setZipCodes} />
           <SortDropdown
             sortArray={sortParams}
             figure="Sort by"
