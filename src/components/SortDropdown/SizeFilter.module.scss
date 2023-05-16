@@ -1,0 +1,35 @@
+.sizeFilter {
+  position: relative;
+  width: 200px;
+  .popup {
+    width: 100%;
+    position: absolute;
+
+    display: grid;
+    grid-template-rows: 0fr;
+    overflow: hidden;
+    background-color: #242424;
+    border-radius: 0.5rem;
+    box-shadow: 1px 1px 6px 0px rgba(255, 255, 255, 0.5);
+    transition: grid-template-rows 0.5s ease-in-out;
+    ul {
+      overflow: hidden;
+      padding: 0;
+      margin: 0;
+      li {
+        padding: 0.3rem;
+        border-radius: 0.3rem;
+        cursor: pointer;
+        list-style: none;
+
+        &:hover {
+          background-color: rgb(84, 81, 81);
+        }
+      }
+    }
+
+    &.open {
+      grid-template-rows: 1fr;
+    }
+  }
+}
