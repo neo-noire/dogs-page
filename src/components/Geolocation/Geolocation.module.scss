@@ -38,7 +38,16 @@
       }
     }
   }
-
+  .clearSearch {
+    position: absolute;
+    right: 2px;
+    top: 2px;
+    padding: 4px 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgb(44, 42, 42);
+  }
   label {
     cursor: pointer;
     display: block;
@@ -72,7 +81,7 @@
             flex: 1;
           }
           ul {
-            flex: 12;
+            flex: 11;
           }
         }
       }

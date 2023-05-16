@@ -94,22 +94,37 @@ export const Geolocation: FC<IGeoProps> = ({ setZipCodes }) => {
             : "All Cities"}
         </span>
       </label>
-      <input id="check" type="checkbox" />
+      <input
+        checked={showInput}
+        onChange={() => setShowInput((prev) => !prev)}
+        id="check"
+        type="checkbox"
+      />
       <div className={`${styles.popup} ${styles.open}`}>
         <input
           id="geo"
           type="text"
           value={textInput}
           onChange={(event) => setTextInput(event.currentTarget.value)}
-          placeholder="search"
+          placeholder="Ex: Madison,WI"
         />
+        <button
+          onClick={() => {
+            setTextInput("");
+            setShowInput(false);
+          }}
+          className={styles.clearSearch}
+        >
+          X
+        </button>
         <ul>
           {allAdresses.map((el) => (
             <li
               key={el.zip_code}
-              onClick={() =>
-                setTextInput(`${el.city},${el.state},${el.zip_code}`)
-              }
+              onClick={() => {
+                setTextInput(`${el.city},${el.state},${el.zip_code}`);
+                setShowInput(false);
+              }}
             >
               {el.city}, {el.state},{el.county} county, ZIP:{el.zip_code}
             </li>

@@ -2,13 +2,13 @@ import React, { useState, FC } from "react";
 import styles from "./SizeFilter.module.scss";
 
 const sizes: number[] = [10, 25, 50, 75, 100];
-interface ISizeFilter {
+interface ISizeFilter<T> {
   controlFunction: (value: any) => void;
   dropdownItem: number | string;
   figure: string;
-  sortArray: Array<any>;
+  sortArray: Array<T>;
 }
-export const SortDropdown: FC<ISizeFilter> = ({
+export const SortDropdown: FC<ISizeFilter<T>> = ({
   controlFunction,
   dropdownItem,
   figure,
