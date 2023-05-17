@@ -44,7 +44,7 @@ export const Main: FC = () => {
   const [sortBy, setSortBy] = useState(sortParams[0]);
   const [zipCodes, setZipCodes] = useState<string[] | null>([]);
 
-  const { dogs, pageCount } = useFetch({
+  const { dogs, pageCount, loading } = useFetch({
     sizePerPage,
     zipCodes,
     currentPage,
@@ -76,7 +76,7 @@ export const Main: FC = () => {
             />
           </div>
         </div>
-        <DogList dogs={dogs} />
+        <DogList loading={loading} dogs={dogs} />
         <ReactPaginate
           className={styles.root}
           breakLabel="..."

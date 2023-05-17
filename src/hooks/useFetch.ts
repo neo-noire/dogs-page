@@ -21,10 +21,11 @@ export const useFetch = ({
     const navigate = useNavigate();
     const [pageCount, setPageCount] = useState<number>(0);
     const [dogs, setDogs] = useState<IDog[]>([]);
+    const [loading, setLoading] = useState<boolean>(false)
 
     useEffect(() => {
         const fetchDogsList = async () => {
-
+            setLoading(true)
             const zip_code =
                 zipCodes && zipCodes?.length > 0
                     ? `&zipCodes=${zipCodes.join("&zipCodes=")}`
@@ -45,6 +46,7 @@ export const useFetch = ({
                     dogsIds
                 );
                 setDogs(dogs);
+                setLoading(false)
             } catch (error) {
                 if (axios.isAxiosError(error)) {
                     if (error?.response?.status === 401) {
@@ -53,20 +55,27 @@ export const useFetch = ({
                 } else {
                     console.error(error);
                 }
+                setLoading(false)
             }
         };
 
-        fetchDogsList();
-        window.scrollTo({
-            left: 0,
-            top: 0,
-            behavior: "smooth",
-        });
+        const timer = setTimeout(() => {
+
+            fetchDogsList();
+
+            window.scrollTo({
+                left: 0,
+                top: 0,
+                behavior: "smooth",
+            });
+        }, 300);
+
+        return () => clearTimeout(timer)
     }, [sizePerPage,
         zipCodes,
         currentPage,
         chosenBreeds,
         sortBy,]);
 
-    return { dogs, pageCount }
+    return { dogs, pageCount, loading }
 }

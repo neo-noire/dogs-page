@@ -27,7 +27,6 @@ export const DogCard: FC<IDog> = ({ img, name, age, zip_code, breed, id }) => {
     return isInside ? true : false;
   };
 
-  console.log(favDogs);
   return (
     <div className={styles.dogCard}>
       <div className={styles.dogPhoto}>
