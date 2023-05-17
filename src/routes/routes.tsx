@@ -1,7 +1,8 @@
 import { createBrowserRouter } from "react-router-dom";
 import { Layout } from "../Layout/Layout";
 import { Main } from "../pages/MainPage/Main";
-import { Auth } from "../pages/auth";
+import { Auth } from "../pages/Auth/Auth";
+import { FavPage } from "../pages/FavPage/FavPage";
 
 const router = createBrowserRouter([
   {
@@ -13,10 +14,14 @@ const router = createBrowserRouter([
         element: <Main />,
       },
       {
-        path: "/login",
-        element: <Auth />,
+        path: "/favorite",
+        element: <FavPage />,
       },
     ],
+  },
+  {
+    path: "/login",
+    element: <Auth />,
   },
 ]);
 

@@ -29,6 +29,9 @@ export const SortDropdown: FC<ISizeFilter<T>> = ({
                 setOpen(false);
               }}
               key={idx}
+              className={
+                dropdownItem === (el.name ? el.name : el) ? styles.choosen : ""
+              }
             >
               {el.name ? el.name : el}
             </li>

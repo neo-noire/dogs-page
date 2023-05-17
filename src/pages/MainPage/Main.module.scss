@@ -1,8 +1,29 @@
+.filters {
+  padding: 1rem;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+
+  .dropdown {
+    display: flex;
+    gap: 0.5rem;
+  }
+}
+
+.wrapper {
+  :global {
+    ul {
+      padding: 0;
+    }
+  }
+}
 .root {
   // height: 36px;
   width: 100%;
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 1rem;
 
   :global {
@@ -27,5 +48,11 @@
         background-color: red;
       }
     }
+  }
+}
+
+@media (max-width: 500px) {
+  .root {
+    gap: 0.2rem;
   }
 }

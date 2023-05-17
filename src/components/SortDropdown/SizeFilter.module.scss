@@ -1,35 +1,52 @@
 .sizeFilter {
   position: relative;
-  width: 200px;
+  width: fit-content;
+  // padding: 8px;
   .popup {
-    width: 100%;
+    width: fit-content;
     position: absolute;
-
+    left: 0;
+    right: 0;
+    margin: 0 auto;
     display: grid;
     grid-template-rows: 0fr;
     overflow: hidden;
+
     background-color: #242424;
     border-radius: 0.5rem;
     box-shadow: 1px 1px 6px 0px rgba(255, 255, 255, 0.5);
-    transition: grid-template-rows 0.5s ease-in-out;
+    transition: grid-template-rows 0.5s ease-in-out, padding 0.5s ease-in-out;
+    z-index: 1;
     ul {
       overflow: hidden;
       padding: 0;
       margin: 0;
       li {
-        padding: 0.3rem;
+        padding: 0.3rem 1rem;
         border-radius: 0.3rem;
+        &:not(:first-child) {
+          margin-top: 0.3rem;
+        }
         cursor: pointer;
         list-style: none;
 
         &:hover {
           background-color: rgb(84, 81, 81);
         }
+
+        &.choosen {
+          background-color: rgb(84, 81, 81);
+        }
       }
     }
 
     &.open {
+      min-width: 80px;
       grid-template-rows: 1fr;
     }
+  }
+
+  button {
+    padding: 0.5rem;
   }
 }

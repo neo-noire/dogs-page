@@ -1,0 +1,31 @@
+.modal {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  display: grid;
+  place-items: center;
+
+  background-color: black;
+  z-index: 1;
+
+  .center {
+    width: 50%;
+    margin: auto;
+    display: grid;
+    place-items: center;
+  }
+}
+
+.matchBtn {
+  margin-bottom: 2rem;
+}
+
+.empty {
+  p {
+    a {
+      color: blueviolet;
+    }
+  }
+}

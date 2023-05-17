@@ -2,6 +2,7 @@ import React, { useState, useEffect, FC } from "react";
 import styles from "./BreedFilter.module.scss";
 import fetchRequest from "../../axios/axios";
 import { BiDownArrow } from "react-icons/bi";
+import { BreedList } from "./BreedList";
 
 interface IBreedFilterProps {
   setBreedsList: (arg: string[]) => void;
@@ -90,31 +91,19 @@ export const BreedFilter: FC<IBreedFilterProps> = ({
       </div>
       {inputText.length > 0 ? (
         <div className={`${styles.popup} ${styles.open}`}>
-          <ul>
-            {searchBreeds.map((el, idx) => (
-              <li
-                className={chosenBreeds.includes(el) ? styles.active : ""}
-                onClick={() => searchBreedsHandler(el)}
-                key={idx}
-              >
-                {el}
-              </li>
-            ))}
-          </ul>
+          <BreedList
+            breedsList={searchBreeds}
+            chosenBreeds={chosenBreeds}
+            onClickHandler={searchBreedsHandler}
+          />
         </div>
       ) : (
         <div className={open ? `${styles.popup} ${styles.open}` : styles.popup}>
-          <ul>
-            {allBreeds.map((el, idx) => (
-              <li
-                className={chosenBreeds.includes(el) ? styles.active : ""}
-                onClick={() => chooseBreedsHandler(el)}
-                key={idx}
-              >
-                {el}
-              </li>
-            ))}
-          </ul>
+          <BreedList
+            breedsList={allBreeds}
+            chosenBreeds={chosenBreeds}
+            onClickHandler={chooseBreedsHandler}
+          />
         </div>
       )}
     </div>

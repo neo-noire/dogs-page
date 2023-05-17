@@ -12,3 +12,8 @@ export interface IDogsIdsList {
     resultIds: string[];
     total: number;
 }
+
+export interface ISortParams {
+    name: string;
+    value: string;
+}
