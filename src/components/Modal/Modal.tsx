@@ -1,11 +1,11 @@
-import React, { FC, ReactNode } from "react";
+import { FC, ReactNode } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import styles from "../../pages/FavPage/FavPage.module.scss";
 
 interface IModalProps {
   isToggle: boolean;
   children: ReactNode;
-  toggleHandler?: (arg: boolean) => void;
+  toggleHandler: (arg: boolean) => void;
 }
 export const Modal: FC<IModalProps> = ({
   isToggle,

@@ -1,9 +1,8 @@
-import React, { useEffect, useState } from 'react'
-import { IDog, IDogsIdsList } from '../types/types';
+import { useEffect, useState } from 'react'
+import { IDog, IDogsIdsList, ISortParams } from '../types/types';
 import fetchRequest from '../axios/axios';
 import axios from 'axios';
 import { useNavigate } from 'react-router';
-import { ISortParams } from '../pages/MainPage/Main';
 
 interface IUseFetch {
     zipCodes: string[] | null;

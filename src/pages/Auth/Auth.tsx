@@ -1,5 +1,5 @@
-import React, { FC, useEffect, useRef, useState } from "react";
-import axios, { AxiosError } from "axios";
+import React, { FC, useState } from "react";
+import { AxiosError } from "axios";
 import fetchRequest from "../../axios/axios";
 import { NavLink, useNavigate } from "react-router-dom";
 import "../../App.scss";

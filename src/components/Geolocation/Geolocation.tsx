@@ -1,16 +1,8 @@
-import React, { FC, useEffect, useRef, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import fetchRequest from "../../axios/axios";
 import styles from "./Geolocation.module.scss";
 import { BsGeoAlt } from "react-icons/bs";
-
-interface ILocation {
-  zip_code: string;
-  latitude: number;
-  longitude: number;
-  city: string;
-  state: string;
-  county: string;
-}
+import { ILocation } from "../../types/types";
 
 interface IResponse {
   results: ILocation[];

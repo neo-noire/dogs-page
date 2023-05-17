@@ -1,4 +1,4 @@
-import React, { FC, ReactNode } from "react";
+import { FC, ReactNode } from "react";
 import styles from "./BurgerMenu.module.scss";
 import { AiOutlineClose } from "react-icons/ai";
 import { AnimatePresence, motion } from "framer-motion";

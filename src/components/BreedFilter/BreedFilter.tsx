@@ -1,4 +1,4 @@
-import React, { useState, useEffect, FC } from "react";
+import { useState, useEffect, FC } from "react";
 import styles from "./BreedFilter.module.scss";
 import fetchRequest from "../../axios/axios";
 import { BiDownArrow } from "react-icons/bi";

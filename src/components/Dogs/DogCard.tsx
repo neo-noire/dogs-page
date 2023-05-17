@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import { FC } from "react";
 import styles from "./Dogs.module.scss";
 import type { RootState } from "../../store/store";
 import { IDog } from "../../types/types";
