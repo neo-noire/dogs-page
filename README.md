@@ -1,5 +1,5 @@
 # Paw Friend
-Live link https://lucky-froyo-91368b.netlify.app/login
+Live link https://lucky-froyo-91368b.netlify.app
 #
 # Overview
 A web application using React, TypeScript, React Router and Redux . The application is designed to display a list of dogs and allows users to choose favourite dogs, see the list of favorite dogs and send Match Request.  Match Request send list of dogs info (from favourite) to server and give user a Match for only one dog, that can be his best friend for adoption.
