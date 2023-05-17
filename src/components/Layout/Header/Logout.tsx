@@ -1,5 +1,5 @@
-import fetchRequest from "../../axios/axios";
 import { useNavigate } from "react-router-dom";
+import fetchRequest from "../../../utils/axios/axios";
 
 export const Logout = () => {
   const navigate = useNavigate();

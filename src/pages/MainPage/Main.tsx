@@ -1,12 +1,12 @@
 import { FC, useState } from "react";
-import { SortDropdown } from "../../components/SortDropdown/SortDropdown";
-import { BreedFilter } from "../../components/BreedFilter/BreedFilter";
 import ReactPaginate from "react-paginate";
 import styles from "./Main.module.scss";
-import { Geolocation } from "../../components/Geolocation/Geolocation";
-import { DogList } from "../../components/Dogs/DogList";
 import { useFetch } from "../../hooks/useFetch";
 import { ISortParams } from "../../types/types";
+import { BreedFilter } from "../../components/ui/BreedFilter/BreedFilter";
+import { SortDropdown } from "../../components/ui/SortDropdown/SortDropdown";
+import { DogList } from "../../components/ui/Dogs/DogList";
+import { Geolocation } from "../../components/ui/Geolocation/Geolocation";
 
 const sizes: number[] = [10, 25, 50, 75, 100];
 

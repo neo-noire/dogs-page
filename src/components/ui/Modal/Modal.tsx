@@ -1,6 +1,6 @@
 import { FC, ReactNode } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import styles from "../../pages/FavPage/FavPage.module.scss";
+import styles from "../../../pages/FavPage/FavPage.module.scss";
 
 interface IModalProps {
   isToggle: boolean;

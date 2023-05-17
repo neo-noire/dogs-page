@@ -1,8 +1,8 @@
 import { createBrowserRouter } from "react-router-dom";
-import { Layout } from "../Layout/Layout";
-import { Main } from "../pages/MainPage/Main";
-import { Auth } from "../pages/Auth/Auth";
-import { FavPage } from "../pages/FavPage/FavPage";
+import { Layout } from "../../components/Layout/Layout";
+import { Auth } from "../../pages/Auth/Auth";
+import { FavPage } from "../../pages/FavPage/FavPage";
+import { Main } from "../../pages/MainPage/Main";
 
 const router = createBrowserRouter([
   {

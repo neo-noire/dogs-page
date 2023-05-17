@@ -1,8 +1,8 @@
 import { useState, useEffect, FC } from "react";
 import styles from "./BreedFilter.module.scss";
-import fetchRequest from "../../axios/axios";
 import { BiDownArrow } from "react-icons/bi";
 import { BreedList } from "./BreedList";
+import fetchRequest from "../../../utils/axios/axios";
 
 interface IBreedFilterProps {
   setBreedsList: (arg: string[]) => void;

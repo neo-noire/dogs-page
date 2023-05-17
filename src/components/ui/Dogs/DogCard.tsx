@@ -1,10 +1,10 @@
 import { FC } from "react";
 import styles from "./Dogs.module.scss";
-import type { RootState } from "../../store/store";
-import { IDog } from "../../types/types";
+import type { RootState } from "../../../utils/store/store";
+import { IDog } from "../../../types/types";
 import { useSelector, useDispatch } from "react-redux";
 import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
-import { dogToFavToggle } from "../../store/favoriteDogsSlice/favoriteDogsSlice";
+import { dogToFavToggle } from "../../../utils/store/favoriteDogsSlice/favoriteDogsSlice";
 
 export const DogCard: FC<IDog> = ({ img, name, age, zip_code, breed, id }) => {
   const favDogs = useSelector((state: RootState) => state.favDogs.dogsList);

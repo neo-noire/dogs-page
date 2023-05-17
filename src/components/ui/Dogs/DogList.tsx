@@ -1,7 +1,7 @@
 import { FC } from "react";
 import styles from "./Dogs.module.scss";
 import { DogCard } from "./DogCard";
-import { IDog } from "../../types/types";
+import { IDog } from "../../../types/types";
 import MyLoader from "./LoaderCard";
 
 interface IDogListProps {

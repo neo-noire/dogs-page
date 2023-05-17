@@ -1,11 +1,11 @@
 import { FC, useState } from "react";
 import { Logout } from "./Logout";
 import { NavLink } from "react-router-dom";
-import { ReactComponent as Dog } from "../../assets/dog2.svg";
-import { BurgerMenu } from "../../components/BurgerMenu/BurgerMenu";
+import { ReactComponent as Dog } from "../../../assets/dog2.svg";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { RxHamburgerMenu } from "react-icons/rx";
 import s from "./Header.module.scss";
+import { BurgerMenu } from "../../ui/BurgerMenu/BurgerMenu";
 
 export const Header: FC = () => {
   const matches = useMediaQuery("(min-width:600px)");

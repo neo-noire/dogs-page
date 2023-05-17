@@ -1,10 +1,10 @@
 import React, { FC, useState } from "react";
 import { AxiosError } from "axios";
-import fetchRequest from "../../axios/axios";
 import { NavLink, useNavigate } from "react-router-dom";
 import "../../App.scss";
 import styles from "./Auth.module.scss";
 import { useValidate } from "../../hooks/useValidate";
+import fetchRequest from "../../utils/axios/axios";
 
 interface IUserData {
   name: string;

@@ -1,13 +1,13 @@
 import { useSelector } from "react-redux";
-import { RootState } from "../../store/store";
-import { DogList } from "../../components/Dogs/DogList";
+import { RootState } from "../../utils/store/store";
+import { DogList } from "../../components/ui/Dogs/DogList";
 import { NavLink } from "react-router-dom";
-import fetchRequest from "../../axios/axios";
-import { Modal } from "../../components/Modal/Modal";
 import { useState } from "react";
 import { IDog } from "../../types/types";
-import { DogCard } from "../../components/Dogs/DogCard";
 import styles from "./FavPage.module.scss";
+import fetchRequest from "../../utils/axios/axios";
+import { Modal } from "../../components/ui/Modal/Modal";
+import { DogCard } from "../../components/ui/Dogs/DogCard";
 
 interface Match {
   match: string;

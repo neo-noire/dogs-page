@@ -1,8 +1,8 @@
 import { FC, useEffect, useState } from "react";
-import fetchRequest from "../../axios/axios";
+import fetchRequest from "../../../utils/axios/axios";
 import styles from "./Geolocation.module.scss";
 import { BsGeoAlt } from "react-icons/bs";
-import { ILocation } from "../../types/types";
+import { ILocation } from "../../../types/types";
 
 interface IResponse {
   results: ILocation[];
@@ -19,14 +19,6 @@ export const Geolocation: FC<IGeoProps> = ({ setZipCodes }) => {
   const [allAdresses, setAllAdresses] = useState<ILocation[]>([]);
 
   useEffect(() => {
-    // Error 500 coming from server, not possible to make auto geo
-    // navigator.geolocation.getCurrentPosition(function (position) {
-    //   setCoordinates({
-    //     lat: position.coords.latitude,
-    //     lon: position.coords.longitude,
-    //   });
-    //   setRecieveCoordinates(true);
-    // });
     const getLocation = async () => {
       let string = textFormater(textInput);
       let res: string[] = [];
