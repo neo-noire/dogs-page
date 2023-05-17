@@ -10,8 +10,9 @@ Creating this CPA these steps were followed:
 1. Created a new React project using Vite and TypeScript.
 2. Structured the project by creating the necessary components, files, and folders.
 3. Implemented the component responsible for displaying the list of items.
-4. Added sort, search and pagination functionality.
-5. Utilized Git for version control, creating regular commits to track progress
+5. Added sort, search and pagination functionality.
+6. Auth page added, user is been checked for auth coockie token every fetch request if not authorized, user will be redirected to AuthPage.
+7. Utilized Git for version control, creating regular commits to track progress
 #
 # Running the Application Locally
 To run the application locally, please follow these steps:
