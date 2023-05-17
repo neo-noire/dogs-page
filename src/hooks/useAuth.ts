@@ -7,7 +7,7 @@ export const useAuth = () => {
     const [error, setError] = useState<string | null>(null)
     const navigate = useNavigate()
     useEffect(() => {
-        fetchRequest.get('/dogs/breeds').then((res) => {
+        fetchRequest.get('/dogs/breeds').then(() => {
             setIsAuth(true)
             setError(null)
             navigate('/')
