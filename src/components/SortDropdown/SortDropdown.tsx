@@ -1,7 +1,6 @@
-import React, { useState, FC } from "react";
+import { useState, FC } from "react";
 import styles from "./SizeFilter.module.scss";
 
-const sizes: number[] = [10, 25, 50, 75, 100];
 interface ISizeFilter {
   controlFunction: (value: any) => void;
   dropdownItem: number | string;

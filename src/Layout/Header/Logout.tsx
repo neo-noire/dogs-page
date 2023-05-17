@@ -1,4 +1,3 @@
-import React from "react";
 import fetchRequest from "../../axios/axios";
 import { useNavigate } from "react-router-dom";
 

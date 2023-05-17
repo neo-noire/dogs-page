@@ -82,7 +82,7 @@ export const BreedFilter: FC<IBreedFilterProps> = ({
         </button>
       </div>
       <div className={styles.listOfBreeds}>
-        {chosenBreeds.map((el, idx) => (
+        {chosenBreeds.map((el) => (
           <div className={styles.selectedBreed} key={el}>
             {el}
             <button onClick={() => removeBreedFromQueryHandler(el)}>x</button>
