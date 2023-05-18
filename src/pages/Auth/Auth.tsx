@@ -1,6 +1,6 @@
 import React, { FC, useState } from "react";
 import { AxiosError } from "axios";
-import { NavLink, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import "../../App.scss";
 import styles from "./Auth.module.scss";
 import { useValidate } from "../../hooks/useValidate";
@@ -38,7 +38,7 @@ export const Auth: FC = () => {
     return (
       <div className={styles.wrapper}>
         <p>{error}</p>
-        <NavLink to={"/login"}>Try again!</NavLink>
+        <a onClick={() => setError(null)}>Try again!</a>
       </div>
     );
   }

@@ -6,7 +6,7 @@ import { AnimatePresence, motion } from "framer-motion";
 interface IBurgerProps {
   isToggle: boolean;
   children: ReactNode;
-  toggleHandler: (arg: boolean) => void;
+  toggleHandler: () => void;
 }
 
 export const BurgerMenu: FC<IBurgerProps> = ({
@@ -14,32 +14,33 @@ export const BurgerMenu: FC<IBurgerProps> = ({
   children,
   toggleHandler,
 }) => {
-  const openMenuHandler = () => {
-    toggleHandler(!isToggle);
-  };
   return (
-    <AnimatePresence>
-      {isToggle && (
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          className={styles.bgMobile}
-        >
+    <div>
+      <AnimatePresence>
+        {isToggle && (
           <motion.div
-            initial={{ right: "-200vw" }}
-            animate={{ right: 0 }}
-            exit={{ right: "-200vw" }}
-            transition={{ duration: 0.7 }}
-            className={styles.slideBlock}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className={styles.bgMobile}
+            onClick={toggleHandler}
           >
-            <button onClick={openMenuHandler} className={styles.close}>
-              <AiOutlineClose size={24} />
-            </button>
-            <div className={styles.mainContent}>{children}</div>
+            <motion.div
+              initial={{ right: "-200vw" }}
+              animate={{ right: 0 }}
+              exit={{ right: "-200vw" }}
+              transition={{ duration: 0.7 }}
+              className={styles.slideBlock}
+              onClick={(e) => e.stopPropagation()}
+            >
+              <button onClick={toggleHandler} className={styles.close}>
+                <AiOutlineClose size={24} />
+              </button>
+              <div className={styles.mainContent}>{children}</div>
+            </motion.div>
           </motion.div>
-        </motion.div>
-      )}
-    </AnimatePresence>
+        )}
+      </AnimatePresence>
+    </div>
   );
 };

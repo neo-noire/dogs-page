@@ -6,10 +6,18 @@ import useMediaQuery from "@mui/material/useMediaQuery";
 import { RxHamburgerMenu } from "react-icons/rx";
 import s from "./Header.module.scss";
 import { BurgerMenu } from "../../ui/BurgerMenu/BurgerMenu";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../../../utils/store/store";
+import { toggleMenu } from "../../../utils/store/menuStateSlice/menuStateSlice";
 
 export const Header: FC = () => {
-  const matches = useMediaQuery("(min-width:600px)");
+  const matches = useMediaQuery("(min-width:700px)");
+  const isMenuOpen = useSelector((state: RootState) => state.menu.isOpen);
+  const dispatch = useDispatch();
   const [openMobile, setOpenMobile] = useState(false);
+  const handleMobileMenu = () => {
+    dispatch(toggleMenu());
+  };
   return (
     <>
       <header>
@@ -27,18 +35,18 @@ export const Header: FC = () => {
             <Logout />
           </nav>
         ) : (
-          <button onClick={() => setOpenMobile(true)} className={s.burgerBtn}>
+          <button onClick={handleMobileMenu} className={s.burgerBtn}>
             <RxHamburgerMenu size={24} />
           </button>
         )}
       </header>
       {!matches && (
-        <BurgerMenu isToggle={openMobile} toggleHandler={setOpenMobile}>
+        <BurgerMenu isToggle={isMenuOpen} toggleHandler={handleMobileMenu}>
           <nav className={s.mobileMenu}>
-            <NavLink onClick={() => setOpenMobile(false)} to={"/"}>
+            <NavLink onClick={handleMobileMenu} to={"/"}>
               Main
             </NavLink>
-            <NavLink onClick={() => setOpenMobile(false)} to={"/favorite"}>
+            <NavLink onClick={handleMobileMenu} to={"/favorite"}>
               Favorite
             </NavLink>
             <Logout />

@@ -1,9 +1,11 @@
 import { configureStore } from '@reduxjs/toolkit'
 import dogsReducer from './favoriteDogsSlice/favoriteDogsSlice'
+import menuStateReducer from './menuStateSlice/menuStateSlice'
 
 export const store = configureStore({
     reducer: {
-        favDogs: dogsReducer
+        favDogs: dogsReducer,
+        menu: menuStateReducer,
     },
 })
 
