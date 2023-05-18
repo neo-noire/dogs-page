@@ -1,4 +1,4 @@
-import { FC, useState } from "react";
+import { FC } from "react";
 import { Logout } from "./Logout";
 import { NavLink } from "react-router-dom";
 import { ReactComponent as Dog } from "../../../assets/dog2.svg";
@@ -14,7 +14,6 @@ export const Header: FC = () => {
   const matches = useMediaQuery("(min-width:700px)");
   const isMenuOpen = useSelector((state: RootState) => state.menu.isOpen);
   const dispatch = useDispatch();
-  const [openMobile, setOpenMobile] = useState(false);
   const handleMobileMenu = () => {
     dispatch(toggleMenu());
   };

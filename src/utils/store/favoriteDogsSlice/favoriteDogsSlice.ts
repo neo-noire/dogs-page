@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit'
 import type { PayloadAction } from '@reduxjs/toolkit'
-import { IDog } from '../../types/types'
+import { IDog } from '../../../types/types'
 
 export interface CounterState {
     dogsList: IDog[]
