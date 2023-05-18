@@ -20,5 +20,5 @@ To run the application locally, please follow these steps:
    1. Clone the repository from the provided Git link.
    2. Navigate to the project's root directory.
    3. Install the necessary dependencies by running the command npm install.
-   4. Once the dependencies are installed, start the development server using the command npm run dev.
+   4. Once the dependencies are installed, start the development server using the command "npm run dev".
    5. Open your web browser and visit http://localhost:3000 to access the application.
