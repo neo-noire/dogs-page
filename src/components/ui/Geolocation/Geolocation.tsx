@@ -17,7 +17,6 @@ export const Geolocation: FC<IGeoProps> = ({ setZipCodes }) => {
   const [showInput, setShowInput] = useState(false);
   const [textInput, setTextInput] = useState<string>("");
   const [allAdresses, setAllAdresses] = useState<ILocation[]>([]);
-  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const getLocation = async () => {
