@@ -17,6 +17,7 @@ export const Header: FC = () => {
   const handleMobileMenu = () => {
     dispatch(toggleMenu());
   };
+
   return (
     <>
       <header>

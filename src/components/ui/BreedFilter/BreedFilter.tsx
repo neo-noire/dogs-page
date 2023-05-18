@@ -1,22 +1,14 @@
 import { useState, useEffect, FC } from "react";
-import styles from "./BreedFilter.module.scss";
-import { BiDownArrow } from "react-icons/bi";
-import { BreedList } from "./BreedList";
 import fetchRequest from "../../../utils/axios/axios";
+import Autocomplete from "@mui/material/Autocomplete";
+import TextField from "@mui/material/TextField";
 
 interface IBreedFilterProps {
   setBreedsList: (arg: string[]) => void;
-  chosenBreeds: string[];
 }
 
-export const BreedFilter: FC<IBreedFilterProps> = ({
-  setBreedsList,
-  chosenBreeds,
-}) => {
-  const [open, setOpen] = useState<Boolean>(false);
+export const BreedFilter: FC<IBreedFilterProps> = ({ setBreedsList }) => {
   const [allBreeds, setAllBreeds] = useState<string[]>([]);
-  const [searchBreeds, setSearchBreeds] = useState<string[]>([]);
-  const [inputText, setInputText] = useState<string>("");
 
   useEffect(() => {
     const getBreeds = async () => {
@@ -31,82 +23,57 @@ export const BreedFilter: FC<IBreedFilterProps> = ({
     getBreeds();
   }, []);
 
-  useEffect(() => {
-    const searchHandler = (text: string) => {
-      if (text.length > 0) {
-        setSearchBreeds(
-          allBreeds.filter((el) =>
-            el.toLowerCase().includes(text.toLowerCase())
-          )
-        );
-      } else {
-        setSearchBreeds([...allBreeds]);
-      }
-    };
-
-    searchHandler(inputText);
-  }, [inputText]);
-
-  const chooseBreedsHandler = (breed: string) => {
-    const breedsArr = [...new Set([...chosenBreeds, breed])];
-    setBreedsList(breedsArr);
-  };
-
-  const searchBreedsHandler = (breed: string) => {
-    chooseBreedsHandler(breed);
-    setInputText("");
-  };
-
-  const removeBreedFromQueryHandler = (breed: string) => {
-    const filteredBreedArr = chosenBreeds.filter((el) => el !== breed);
-    setBreedsList(filteredBreedArr);
-  };
-
   return (
-    <div className={styles.wrapper}>
-      <div className={styles.top}>
-        <div className={styles.search}>
-          <input
-            value={inputText}
-            onChange={(e) => setInputText(e.currentTarget.value)}
-            type="text"
-            placeholder="Search by Bread Name"
-          />
-        </div>
-        <button
-          onClick={() => {
-            setOpen(!open);
-            setInputText("");
-          }}
-        >
-          All Breeds <BiDownArrow />
-        </button>
-      </div>
-      <div className={styles.listOfBreeds}>
-        {chosenBreeds.map((el) => (
-          <div className={styles.selectedBreed} key={el}>
-            {el}
-            <button onClick={() => removeBreedFromQueryHandler(el)}>x</button>
-          </div>
-        ))}
-      </div>
-      {inputText.length > 0 ? (
-        <div className={`${styles.popup} ${styles.open}`}>
-          <BreedList
-            breedsList={searchBreeds}
-            chosenBreeds={chosenBreeds}
-            onClickHandler={searchBreedsHandler}
-          />
-        </div>
-      ) : (
-        <div className={open ? `${styles.popup} ${styles.open}` : styles.popup}>
-          <BreedList
-            breedsList={allBreeds}
-            chosenBreeds={chosenBreeds}
-            onClickHandler={chooseBreedsHandler}
-          />
-        </div>
+    <Autocomplete
+      multiple
+      sx={{
+        minWidth: 200,
+        maxWidth: 380,
+        backgroundColor: "#1a1a1a",
+        borderRadius: "1rem",
+        "& .MuiChip-root": {
+          color: "#ffff",
+          border: "1px solid #ffff",
+        },
+        "& .MuiInputBase-input": {
+          color: "#ffff",
+        },
+        "& .MuiFormLabel-root": {
+          color: "#ffff",
+        },
+        "& .MuiInputBase-root": {
+          borderRadius: "1rem",
+        },
+        "& .MuiFormControl-root": {
+          borderRadius: "1rem",
+        },
+        //all icons/ svg of dropdown etc.
+        "& .MuiSvgIcon-root": {
+          fill: "#ffff",
+        },
+        //cutted outline
+        "& .MuiOutlinedInput-notchedOutline": {
+          borderColor: "#ffff",
+        },
+        "& + .MuiPopper-root ": {
+          backgroundColor: "red",
+        },
+      }}
+      id="tags-outlined"
+      options={allBreeds}
+      getOptionLabel={(option) => option}
+      onChange={(_, value) => {
+        setBreedsList(value);
+      }}
+      filterSelectedOptions
+      renderInput={(params) => (
+        <TextField
+          sx={{ backgroundColor: "#1a1a1a", color: "#ffff" }}
+          {...params}
+          label="All breeds"
+          placeholder=""
+        />
       )}
-    </div>
+    />
   );
 };

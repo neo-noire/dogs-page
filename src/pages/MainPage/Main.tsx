@@ -56,10 +56,7 @@ export const Main: FC = () => {
     <>
       <main className={styles.wrapper}>
         <div className={styles.filters}>
-          <BreedFilter
-            chosenBreeds={chosenBreeds}
-            setBreedsList={setChosenBreeds}
-          />
+          <BreedFilter setBreedsList={setChosenBreeds} />
           <Geolocation setZipCodes={setZipCodes} />
           <div className={styles.dropdown}>
             <SortDropdown
@@ -83,6 +80,7 @@ export const Main: FC = () => {
           nextLabel=">"
           onPageChange={(event) => setCurrentPage(event.selected)}
           pageRangeDisplayed={2}
+          marginPagesDisplayed={2}
           pageCount={pageCount}
           previousLabel="<"
           renderOnZeroPageCount={null}

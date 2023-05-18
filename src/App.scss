@@ -1,13 +1,17 @@
 #root {
-  // width: 100%;
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 0 2rem;
-  text-align: center;
-
   scroll-behavior: smooth;
-}
+  .global {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 2rem;
+    text-align: center;
 
+    &.noscroll {
+      overflow: hidden;
+      position: fixed;
+    }
+  }
+}
 header {
   width: 100%;
   display: flex;
