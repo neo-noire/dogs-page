@@ -24,8 +24,8 @@ export const useFetch = ({
     const [loading, setLoading] = useState<boolean>(false)
 
     useEffect(() => {
+        setLoading(true)
         const fetchDogsList = async () => {
-            setLoading(true)
             const zip_code =
                 zipCodes && zipCodes?.length > 0
                     ? `&zipCodes=${zipCodes.join("&zipCodes=")}`
@@ -59,7 +59,7 @@ export const useFetch = ({
             }
         };
 
-        const timer = setTimeout(() => {
+        const debounce = setTimeout(() => {
 
             fetchDogsList();
 
@@ -68,9 +68,10 @@ export const useFetch = ({
                 top: 0,
                 behavior: "smooth",
             });
-        }, 300);
 
-        return () => clearTimeout(timer)
+        }, 500);
+
+        return () => clearTimeout(debounce)
     }, [sizePerPage,
         zipCodes,
         currentPage,

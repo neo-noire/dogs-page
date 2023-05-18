@@ -7,7 +7,7 @@ export const useValidate = (validateValue: string) => {
 
     useEffect(() => {
         const emailChecker = () => {
-            const regex: RegExp = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(.\w{2,3})+$/;
+            const regex: RegExp = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
             if (validateValue.length > 1) {
                 if (validateValue.match(regex)) {
                     setInputHelper("Well Done!");

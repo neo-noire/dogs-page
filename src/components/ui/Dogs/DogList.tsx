@@ -21,6 +21,14 @@ export const DogList: FC<IDogListProps> = ({ dogs, loading }) => {
       </div>
     );
   }
+
+  if (dogs.length === 0 && !loading) {
+    return (
+      <div className={styles.emptyRes}>
+        Sorry No Dogs, please adjust your filters
+      </div>
+    );
+  }
   return (
     <div className={styles.dogs}>
       {dogs.map((dog) => (

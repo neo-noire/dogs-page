@@ -38,7 +38,7 @@ export const Auth: FC = () => {
     return (
       <div className={styles.wrapper}>
         <p>{error}</p>
-        <a onClick={() => setError(null)}>Try again!</a>
+        <button onClick={() => setError(null)}>Try again!</button>
       </div>
     );
   }

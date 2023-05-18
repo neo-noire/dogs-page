@@ -43,6 +43,7 @@ export const BreedFilter: FC<IBreedFilterProps> = ({
         setSearchBreeds([...allBreeds]);
       }
     };
+
     searchHandler(inputText);
   }, [inputText]);
 

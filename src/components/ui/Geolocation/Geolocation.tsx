@@ -46,7 +46,10 @@ export const Geolocation: FC<IGeoProps> = ({ setZipCodes }) => {
       }
     };
 
-    getLocation();
+    const debounce = setTimeout(() => {
+      getLocation();
+    }, 500);
+    return () => clearTimeout(debounce);
   }, [textInput]);
 
   function textFormater(text: string): string {
@@ -89,18 +92,21 @@ export const Geolocation: FC<IGeoProps> = ({ setZipCodes }) => {
           id="geo"
           type="text"
           value={textInput}
+          onBlur={() => setShowInput(false)}
           onChange={(event) => setTextInput(event.currentTarget.value)}
           placeholder="Ex: Madison,WI"
         />
-        <button
-          onClick={() => {
-            setTextInput("");
-            setShowInput(false);
-          }}
-          className={styles.clearSearch}
-        >
-          X
-        </button>
+        {textInput.length > 1 && (
+          <button
+            onClick={() => {
+              setTextInput("");
+              setShowInput(false);
+            }}
+            className={styles.clearSearch}
+          >
+            Delete
+          </button>
+        )}
         <ul>
           {allAdresses.map((el) => (
             <li
