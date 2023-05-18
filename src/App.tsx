@@ -12,7 +12,7 @@ function App() {
 
   return (
     <div className={matches && isMenuOpen ? "global noscroll" : "global"}>
-      <RouterProvider router={router} />;
+      <RouterProvider router={router} />
     </div>
   );
 }
