@@ -41,7 +41,7 @@ export const Main: FC = () => {
   const [chosenBreeds, setChosenBreeds] = useState<string[]>([]);
   const [sizePerPage, setSizePerPage] = useState<number>(10);
   const [currentPage, setCurrentPage] = useState<number>(0);
-  const [sortBy, setSortBy] = useState(sortParams[0]);
+  const [sortBy, setSortBy] = useState<ISortParams>(sortParams[0]);
   const [zipCodes, setZipCodes] = useState<string[] | null>([]);
 
   const { dogs, pageCount, loading } = useFetch({

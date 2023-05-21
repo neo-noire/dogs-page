@@ -1,18 +1,19 @@
-import { useState, FC } from "react";
+import { useState } from "react";
 import styles from "./SizeFilter.module.scss";
+import { ISortParams } from "../../../types/types";
 
-interface ISizeFilter {
+interface ISizeFilter<T> {
   controlFunction: (value: any) => void;
   dropdownItem: number | string;
   figure: string;
-  sortArray: Array<any | string>;
+  sortArray: T[];
 }
-export const SortDropdown: FC<ISizeFilter> = ({
+export const SortDropdown = <T extends ISortParams | number>({
   controlFunction,
   dropdownItem,
   figure,
   sortArray,
-}) => {
+}: ISizeFilter<T>) => {
   const [open, setOpen] = useState(false);
   return (
     <div className={styles.sizeFilter}>
@@ -29,10 +30,12 @@ export const SortDropdown: FC<ISizeFilter> = ({
               }}
               key={idx}
               className={
-                dropdownItem === (el.name ? el.name : el) ? styles.choosen : ""
+                dropdownItem === (typeof el === "number" ? el : el?.name)
+                  ? styles.choosen
+                  : ""
               }
             >
-              {el.name ? el.name : el}
+              {typeof el === "number" ? el : el?.name}
             </li>
           ))}
         </ul>
