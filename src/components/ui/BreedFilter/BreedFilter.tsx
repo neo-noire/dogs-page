@@ -1,10 +1,11 @@
-import {  useEffect, FC } from "react";
+import { useEffect, FC } from "react";
 import fetchRequest from "../../../utils/axios/axios";
 import Autocomplete from "@mui/material/Autocomplete";
 import TextField from "@mui/material/TextField";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../utils/store/store";
 import { setBreedList, setChosenBreeds } from "../../../utils/store/dogsListSlice/dogsListSlice";
+import { muiStyleAutocomplete } from "../../../assets/data/muiStyles";
 
 
 export const BreedFilter: FC = () => {
@@ -13,7 +14,7 @@ export const BreedFilter: FC = () => {
 
   useEffect(() => {
     const getBreeds = async () => {
-      if(breedsPersisted.breedList.length === 0) {
+      if (breedsPersisted.breedList.length === 0) {
         try {
           const { data: breeds } = await fetchRequest<string[]>(`/dogs/breeds`);
           dispatch(setBreedList(breeds))
@@ -26,46 +27,14 @@ export const BreedFilter: FC = () => {
     getBreeds();
   }, []);
 
-   const chooseBreedHandler = (e:string[]):void => {
-      dispatch(setChosenBreeds(e))
-   }
+  const chooseBreedHandler = (e: string[]): void => {
+    dispatch(setChosenBreeds(e))
+  }
 
   return (
     <Autocomplete
       multiple
-      sx={{
-        minWidth: 200,
-        maxWidth: 380,
-        backgroundColor: "#1a1a1a",
-        borderRadius: "1rem",
-        "& .MuiChip-root": {
-          color: "#ffff",
-          border: "1px solid #ffff",
-        },
-        "& .MuiInputBase-input": {
-          color: "#ffff",
-        },
-        "& .MuiFormLabel-root": {
-          color: "#ffff",
-        },
-        "& .MuiInputBase-root": {
-          borderRadius: "1rem",
-        },
-        "& .MuiFormControl-root": {
-          borderRadius: "1rem",
-        },
-        //all icons/ svg of dropdown etc.
-        "& .MuiSvgIcon-root": {
-          fill: "#ffff",
-        },
-        //cutted outline
-        "& .MuiOutlinedInput-notchedOutline": {
-          borderColor: "#ffff",
-        },
-        "& + .MuiPopper-root ": {
-          backgroundColor: "red",
-        },
-      }}
+      sx={{ ...muiStyleAutocomplete, maxWidth: 380 }}
       id="tags-outlined"
       options={breedsPersisted.breedList}
       getOptionLabel={(option) => option}

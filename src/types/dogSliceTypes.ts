@@ -1,4 +1,4 @@
-import { IDog, ISortParams } from "./types";
+import { IDog, ILocation, ISortParams } from "./types";
 
 interface IBreed {
     breedList: string[],
@@ -10,6 +10,12 @@ interface ISortBy<T> {
     chosenItem: T
 }
 
+interface IAddress {
+    addressList: ILocation[],
+    zipCodes: string | null,
+    input: string,
+}
+
 export interface CounterState {
     dogsArray: IDog[],
     queryParam: string,
@@ -18,4 +24,5 @@ export interface CounterState {
     sortBy: ISortBy<ISortParams>,
     dogsPerPage: ISortBy<number>,
     currentPage: number,
+    address: IAddress
 }

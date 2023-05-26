@@ -16,9 +16,8 @@ import { scrollToTopHandler } from "../../utils/handlers/scrolToTopHandler";
 export const Main: FC = () => {
   const dogsStore = useSelector((store: RootState) => store.mainDogsCache)
   const dispatch = useDispatch();
-  const [zipCodes, setZipCodes] = useState<string[] | null>([]);
 
-  const { loading } = useFetch({ zipCodes });
+  const { loading } = useFetch();
 
   const pageHandler = (e: number) => {
     dispatch(setCurrentPage(e))
@@ -36,7 +35,7 @@ export const Main: FC = () => {
       <main className={styles.wrapper}>
         <div className={styles.filters}>
           <BreedFilter />
-          <Geolocation setZipCodes={setZipCodes} />
+          <Geolocation />
           <div className={styles.dropdown}>
             <SortDropdown
               sortArray={dogsStore.sortBy.sortList}

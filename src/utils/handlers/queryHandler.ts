@@ -5,7 +5,7 @@ type QueryHandlerFn = (zipCode: string[] | null, currentPage: number, sizePerPag
 export const queryHandler: QueryHandlerFn = (zipCodes, currentPage, sizePerPage, chosenBreeds, sortBy) => {
     const zip_code =
         zipCodes && zipCodes?.length > 0
-            ? `&zipCodes=${zipCodes.join("&zipCodes=")}`
+            ? `&zipCodes=${zipCodes}`
             : "";
     const from = currentPage > 0 ? `&from=${currentPage * sizePerPage}` : "";
     const breedQuery = chosenBreeds.map((el) => `&breeds=${el}`).join("");
@@ -16,3 +16,6 @@ export const queryHandler: QueryHandlerFn = (zipCodes, currentPage, sizePerPage,
 
     return string;
 }
+
+
+//zipCodes.join("&zipCodes=")
