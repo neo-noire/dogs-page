@@ -1,6 +1,6 @@
 import { ISortParams } from "../../types/types";
 
-type QueryHandlerFn = (zipCode: string[] | null, currentPage: number, sizePerPage: number, chosenBreeds: string[], sortBy: ISortParams) => string
+type QueryHandlerFn = (zipCode: string | null, currentPage: number, sizePerPage: number, chosenBreeds: string[], sortBy: ISortParams) => string
 
 export const queryHandler: QueryHandlerFn = (zipCodes, currentPage, sizePerPage, chosenBreeds, sortBy) => {
     const zip_code =

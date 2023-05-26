@@ -1,4 +1,4 @@
-import { FC, useState } from "react";
+import { FC } from "react";
 import ReactPaginate from "react-paginate";
 import styles from "./Main.module.scss";
 import { useFetch } from "../../hooks/useFetch";
