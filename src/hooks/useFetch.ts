@@ -1,82 +1,65 @@
+import { RootState } from './../utils/store/store';
 import { useEffect, useState } from 'react'
 import { IDog, IDogsIdsList, ISortParams } from '../types/types';
 import axios from 'axios';
 import { useNavigate } from 'react-router';
 import fetchRequest from '../utils/axios/axios';
+import { useDispatch, useSelector } from 'react-redux';
+import { updatePages, updateQuery, updateState } from '../utils/store/dogsListSlice/dogsListSlice';
+import { queryHandler } from '../utils/handlers/queryHandler';
 
 interface IUseFetch {
     zipCodes: string[] | null;
-    sizePerPage: number;
-    currentPage: number;
-    chosenBreeds: string[];
-    sortBy: ISortParams;
 }
 
 export const useFetch = ({
-    sizePerPage,
-    zipCodes,
-    currentPage,
-    chosenBreeds,
-    sortBy, }: IUseFetch) => {
+    zipCodes }: IUseFetch) => {
+    const dispatch = useDispatch();
     const navigate = useNavigate();
-    const [pageCount, setPageCount] = useState<number>(0);
-    const [dogs, setDogs] = useState<IDog[]>([]);
-    const [loading, setLoading] = useState<boolean>(false)
+    const dogsStore = useSelector((store: RootState) => store.mainDogsCache)
+    const [loading, setLoading] = useState<boolean>(false);
+
 
     useEffect(() => {
-        setLoading(true)
         const fetchDogsList = async () => {
-            const zip_code =
-                zipCodes && zipCodes?.length > 0
-                    ? `&zipCodes=${zipCodes.join("&zipCodes=")}`
-                    : "";
-            const from = currentPage > 0 ? `&from=${currentPage * sizePerPage}` : "";
-            const breedQuery = chosenBreeds.map((el) => `&breeds=${el}`).join("");
-            const size = `&size=${sizePerPage}`;
-            const order = sortBy.value.includes("-") ? "desc" : "asc";
-            const sort = `&sort=${sortBy.value.split("-").join("")}:`;
-            try {
-                const { data: dogsIdsResult } = await fetchRequest<IDogsIdsList>(
-                    `/dogs/search?${breedQuery + zip_code + sort + order + size + from}`
-                );
-                setPageCount(dogsIdsResult.total / sizePerPage);
-                const dogsIds = dogsIdsResult.resultIds;
-                const { data: dogs } = await fetchRequest.post<IDog[]>(
-                    "/dogs",
-                    dogsIds
-                );
-                setDogs(dogs);
-                setLoading(false)
-            } catch (error) {
-                if (axios.isAxiosError(error)) {
-                    if (error?.response?.status === 401) {
-                        navigate("/login");
+            const queryParameter = queryHandler(zipCodes, dogsStore.currentPage, dogsStore.dogsPerPage.chosenItem, dogsStore.breed.chosenBreeds, dogsStore.sortBy.chosenItem)
+            if (queryParameter !== dogsStore.queryParam) {
+                setLoading(true)
+                try {
+                    const { data: dogsIdsResult } = await fetchRequest<IDogsIdsList>(
+                        `/dogs/search?${queryParameter}`
+                    );
+                    const dogsIds = dogsIdsResult.resultIds;
+
+                    const { data: dogs } = await fetchRequest.post<IDog[]>(
+                        "/dogs",
+                        dogsIds
+                    );
+                    dispatch(updateState(dogs))
+                    dispatch(updateQuery(queryParameter))
+                    dispatch(updatePages(dogsIdsResult.total / dogsStore.dogsPerPage.chosenItem))
+                    setLoading(false);
+                } catch (error) {
+                    if (axios.isAxiosError(error)) {
+                        if (error?.response?.status === 401) {
+                            navigate("/login");
+                        }
+                    } else {
+                        console.error(error);
                     }
-                } else {
-                    console.error(error);
+                    setLoading(false)
                 }
-                setLoading(false)
             }
         };
 
-        const debounce = setTimeout(() => {
+        fetchDogsList();
 
-            fetchDogsList();
 
-            window.scrollTo({
-                left: 0,
-                top: 0,
-                behavior: "smooth",
-            });
-
-        }, 500);
-
-        return () => clearTimeout(debounce)
-    }, [sizePerPage,
+    }, [dogsStore.dogsPerPage.chosenItem,
         zipCodes,
-        currentPage,
-        chosenBreeds,
-        sortBy,]);
+    dogsStore.currentPage,
+    dogsStore.breed.chosenBreeds,
+    dogsStore.sortBy.chosenItem]);
 
-    return { dogs, pageCount, loading }
+    return { loading }
 }

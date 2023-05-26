@@ -7,81 +7,64 @@ import { BreedFilter } from "../../components/ui/BreedFilter/BreedFilter";
 import { SortDropdown } from "../../components/ui/SortDropdown/SortDropdown";
 import { DogList } from "../../components/ui/Dogs/DogList";
 import { Geolocation } from "../../components/ui/Geolocation/Geolocation";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../../utils/store/store";
+import { setCurrentPage, updateDogsPerPageFilter, updateSorByFilter } from "../../utils/store/dogsListSlice/dogsListSlice";
+import { scrollToTopHandler } from "../../utils/handlers/scrolToTopHandler";
 
-const sizes: number[] = [10, 25, 50, 75, 100];
-
-const sortParams: ISortParams[] = [
-  {
-    name: "Breed asc",
-    value: "breed",
-  },
-  {
-    name: "Breed desc",
-    value: "-breed",
-  },
-  {
-    name: "Age asc",
-    value: "age",
-  },
-  {
-    name: "Age desc",
-    value: "-age",
-  },
-  {
-    name: "Name asc",
-    value: "name",
-  },
-  {
-    name: "Name desc",
-    value: "-name",
-  },
-];
 
 export const Main: FC = () => {
-  const [chosenBreeds, setChosenBreeds] = useState<string[]>([]);
-  const [sizePerPage, setSizePerPage] = useState<number>(10);
-  const [currentPage, setCurrentPage] = useState<number>(0);
-  const [sortBy, setSortBy] = useState<ISortParams>(sortParams[0]);
+  const dogsStore = useSelector((store: RootState) => store.mainDogsCache)
+  const dispatch = useDispatch();
   const [zipCodes, setZipCodes] = useState<string[] | null>([]);
 
-  const { dogs, pageCount, loading } = useFetch({
-    sizePerPage,
-    zipCodes,
-    currentPage,
-    chosenBreeds,
-    sortBy,
-  });
+  const { loading } = useFetch({ zipCodes });
+
+  const pageHandler = (e: number) => {
+    dispatch(setCurrentPage(e))
+  }
+
+  const setSortByHandler = (e: ISortParams) => {
+    dispatch(updateSorByFilter(e))
+  }
+  const setDogsPerPageHandler = (e: number) => {
+    dispatch(updateDogsPerPageFilter(e))
+  }
 
   return (
     <>
       <main className={styles.wrapper}>
         <div className={styles.filters}>
-          <BreedFilter setBreedsList={setChosenBreeds} />
+          <BreedFilter />
           <Geolocation setZipCodes={setZipCodes} />
           <div className={styles.dropdown}>
             <SortDropdown
-              sortArray={sortParams}
+              sortArray={dogsStore.sortBy.sortList}
               figure="Sort"
-              controlFunction={setSortBy}
-              dropdownItem={sortBy.name}
+              controlFunction={setSortByHandler}
+              choosenItem={dogsStore.sortBy.chosenItem.name}
             />
             <SortDropdown
-              sortArray={sizes}
+              sortArray={dogsStore.dogsPerPage.sortList}
               figure="Show"
-              controlFunction={setSizePerPage}
-              dropdownItem={sizePerPage}
+              controlFunction={setDogsPerPageHandler}
+              choosenItem={dogsStore.dogsPerPage.chosenItem}
             />
           </div>
         </div>
-        <DogList loading={loading} dogs={dogs} />
+        <DogList loading={loading} dogs={dogsStore.dogsArray} />
         <ReactPaginate
           className={styles.root}
           breakLabel="..."
           nextLabel=">"
-          onPageChange={(event) => setCurrentPage(event.selected)}
+          initialPage={dogsStore.currentPage}
+          onPageChange={(event) => {
+            pageHandler(event.selected)
+            scrollToTopHandler()
+          }}
           pageRangeDisplayed={2}
           marginPagesDisplayed={2}
-          pageCount={pageCount}
+          pageCount={dogsStore.totalPages}
           previousLabel="<"
           renderOnZeroPageCount={null}
         />

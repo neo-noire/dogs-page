@@ -2,25 +2,32 @@ import { useState } from "react";
 import styles from "./SizeFilter.module.scss";
 import { ISortParams } from "../../../types/types";
 
-interface ISizeFilter<T> {
-  controlFunction: (value: any) => void;
-  dropdownItem: number | string;
+export interface ISizeFilter<T> {
+  controlFunction: (value: T) => void;
+  choosenItem: number | string;
   figure: string;
   sortArray: T[];
 }
 export const SortDropdown = <T extends ISortParams | number>({
   controlFunction,
-  dropdownItem,
+  choosenItem,
   figure,
   sortArray,
 }: ISizeFilter<T>) => {
   const [open, setOpen] = useState(false);
   return (
     <div className={styles.sizeFilter}>
-      <button onClick={() => setOpen(!open)}>
-        {figure}: {dropdownItem}
+      <button
+        aria-label="sort-open"
+        data-testid="sort-open"
+        onClick={() => setOpen(!open)}
+      >
+        {figure}: {choosenItem}
       </button>
-      <div className={open ? `${styles.popup} ${styles.open}` : styles.popup}>
+      <div
+        data-testid="dropdown-list"
+        className={open ? `${styles.popup} ${styles.open}` : styles.popup}
+      >
         <ul>
           {sortArray.map((el, idx) => (
             <li
@@ -30,7 +37,7 @@ export const SortDropdown = <T extends ISortParams | number>({
               }}
               key={idx}
               className={
-                dropdownItem === (typeof el === "number" ? el : el?.name)
+                choosenItem === (typeof el === "number" ? el : el?.name)
                   ? styles.choosen
                   : ""
               }

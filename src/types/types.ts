@@ -12,6 +12,12 @@ export interface IDogsIdsList {
     resultIds: string[];
     total: number;
 }
+
+
+export interface ISortParams {
+    name: string;
+    value: string;
+}
 export interface ILocation {
     zip_code: string;
     latitude: number;
@@ -21,8 +27,8 @@ export interface ILocation {
     county: string;
 }
 
-export interface ISortParams {
-    name: string;
-    value: string;
+export interface IResponse {
+    results: ILocation[];
+    total: number;
 }
 

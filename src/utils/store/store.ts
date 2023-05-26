@@ -1,11 +1,14 @@
 import { configureStore } from '@reduxjs/toolkit'
 import dogsReducer from './favoriteDogsSlice/favoriteDogsSlice'
 import menuStateReducer from './menuStateSlice/menuStateSlice'
+import allDogsListReducer from './dogsListSlice/dogsListSlice'
 
 export const store = configureStore({
     reducer: {
         favDogs: dogsReducer,
+        mainDogsCache: allDogsListReducer,
         menu: menuStateReducer,
+
     },
 })
 

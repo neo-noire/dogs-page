@@ -1,126 +1,79 @@
-import { FC, useEffect, useState } from "react";
+import React, { FC, useEffect, useState } from "react";
 import fetchRequest from "../../../utils/axios/axios";
-import styles from "./Geolocation.module.scss";
-import { BsGeoAlt } from "react-icons/bs";
 import { ILocation } from "../../../types/types";
+import TextField from '@mui/material/TextField';
+import Autocomplete from '@mui/material/Autocomplete';
+import CircularProgress from '@mui/material/CircularProgress';
+import { textFormater } from "../../../utils/handlers/textFormatterForGeo";
 
 interface IResponse {
   results: ILocation[];
   total: number;
 }
 
-interface IGeoProps {
-  setZipCodes: (zipCodes: string[] | null) => void;
-}
-
-export const Geolocation: FC<IGeoProps> = ({ setZipCodes }) => {
-  const [showInput, setShowInput] = useState(false);
-  const [textInput, setTextInput] = useState<string>("");
+export const Geolocation: FC = () => {
+  const [openList, setOpenList] = useState<boolean>(false);
+  const [textInput, setTextInput] = useState("");
   const [allAdresses, setAllAdresses] = useState<ILocation[]>([]);
+  const [loading, setLoading] = useState<boolean>(false)
 
-  useEffect(() => {
-    const getLocation = async () => {
-      let string = textFormater(textInput);
-      let res: string[] = [];
 
-      if (string.includes(",")) {
-        res = string.split(",");
-      } else {
-        res = [string];
-      }
-      try {
-        const { data } = await fetchRequest.post<IResponse>(
-          `/locations/search`,
-          {
-            city: res[0],
-            states: res[1] ? [res[1]] : "",
-            size: 100,
-          }
-        );
-        setAllAdresses(data.results);
-        setZipCodes(data.results.map((el) => el.zip_code));
-        res[2] && setZipCodes([res[2]]);
-        textInput.length === 0 && setZipCodes(null);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-
-    const debounce = setTimeout(() => {
-      getLocation();
-    }, 500);
-    return () => clearTimeout(debounce);
-  }, [textInput]);
-
-  function textFormater(text: string): string {
-    let res: string = "";
-    if (text.includes(",")) {
-      res = textInput
-        .split(",")
-        .map((el, idx) =>
-          idx === 0
-            ? (el.charAt(0).toLocaleUpperCase() + el.slice(1)).trim()
-            : el.toLocaleUpperCase().trim()
-        )
-        .join(",");
-    } else {
-      res = textInput.charAt(0).toLocaleUpperCase() + textInput.slice(1);
+  async function getData(text: string) {
+    const query = textFormater(text);
+    setLoading(true)
+    try {
+      const { data } = await fetchRequest.post<IResponse>(`/locations/search`,
+        {
+          city: query[0],
+          states: query[1] ? [query[1]] : "",
+          size: 100,
+        });
+      setAllAdresses(data.results)
+    } catch (error) {
+      console.log(error)
     }
-
-    return res;
+    setLoading(false)
   }
 
-  return (
-    <div className={styles.geoWrapper}>
-      {" "}
-      <label htmlFor="check">
-        <BsGeoAlt />:
-        <span>
-          {textFormater(textInput).length > 0
-            ? textFormater(textInput)
-            : "All Cities"}
-        </span>
-      </label>
-      <input
-        checked={showInput}
-        onChange={() => setShowInput((prev) => !prev)}
-        id="check"
-        type="checkbox"
-      />
-      <div className={`${styles.popup} ${styles.open}`}>
-        <input
-          id="geo"
-          type="text"
-          value={textInput}
-          onBlur={() => setShowInput(false)}
-          onChange={(event) => setTextInput(event.currentTarget.value)}
-          placeholder="Ex: Madison,WI"
+  useEffect(() => {
+    getData(textInput)
+  }, [textInput]);
+
+  return (<>
+    <Autocomplete
+      id="asynchronous-demo"
+      sx={{ width: 300 }}
+      open={openList}
+      onOpen={() => {
+        setOpenList(true);
+      }}
+      onClose={() => {
+        setOpenList(false);
+      }}
+      isOptionEqualToValue={(option, value) => option.zip_code === value.zip_code}
+      getOptionLabel={(option) => `${option.city}, ${option.state}, ${option.county}, ZIP:${option.zip_code}`}
+      onInputChange={(_, value) => setTextInput(value)}
+      options={allAdresses}
+      loading={loading}
+      renderInput={(params) => (
+        <TextField
+          {...params}
+          label="Asynchronous"
+          InputProps={{
+            ...params.InputProps,
+            endAdornment: (
+              <React.Fragment>
+                {loading ? <CircularProgress color="inherit" size={20} /> : null}
+                {params.InputProps.endAdornment}
+              </React.Fragment>
+            ),
+          }}
         />
-        {textInput.length > 1 && (
-          <button
-            onClick={() => {
-              setTextInput("");
-              setShowInput(false);
-            }}
-            className={styles.clearSearch}
-          >
-            Delete
-          </button>
-        )}
-        <ul>
-          {allAdresses.map((el) => (
-            <li
-              key={el.zip_code}
-              onClick={() => {
-                setTextInput(`${el.city},${el.state},${el.zip_code}`);
-                setShowInput(false);
-              }}
-            >
-              {el.city}, {el.state},{el.county} county, ZIP:{el.zip_code}
-            </li>
-          ))}
-        </ul>
-      </div>
-    </div>
+      )}
+    />
+  </>
   );
 };
+
+
+

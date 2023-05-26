@@ -1,10 +1,10 @@
 import axios from "axios";
 
-const URL: string = "https://frontend-take-home-service.fetch.com"
+export const BASE_URL: string = "https://frontend-take-home-service.fetch.com"
 
 const fetchRequest = axios.create({
     withCredentials: true,
-    baseURL: URL,
+    baseURL: BASE_URL,
     headers: {
         'Access-Control-Allow-Origin': '*',
         'Access-Control-Allow-Headers': '*',

@@ -1,27 +1,34 @@
-import { useState, useEffect, FC } from "react";
+import {  useEffect, FC } from "react";
 import fetchRequest from "../../../utils/axios/axios";
 import Autocomplete from "@mui/material/Autocomplete";
 import TextField from "@mui/material/TextField";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../../../utils/store/store";
+import { setBreedList, setChosenBreeds } from "../../../utils/store/dogsListSlice/dogsListSlice";
 
-interface IBreedFilterProps {
-  setBreedsList: (arg: string[]) => void;
-}
 
-export const BreedFilter: FC<IBreedFilterProps> = ({ setBreedsList }) => {
-  const [allBreeds, setAllBreeds] = useState<string[]>([]);
+export const BreedFilter: FC = () => {
+  const breedsPersisted = useSelector((store: RootState) => store.mainDogsCache.breed)
+  const dispatch = useDispatch()
 
   useEffect(() => {
     const getBreeds = async () => {
-      try {
-        const { data: breeds } = await fetchRequest<string[]>(`/dogs/breeds`);
-        setAllBreeds(breeds);
-      } catch (error) {
-        console.log(error);
+      if(breedsPersisted.breedList.length === 0) {
+        try {
+          const { data: breeds } = await fetchRequest<string[]>(`/dogs/breeds`);
+          dispatch(setBreedList(breeds))
+        } catch (error) {
+          console.log(error);
+        }
       }
     };
 
     getBreeds();
   }, []);
+
+   const chooseBreedHandler = (e:string[]):void => {
+      dispatch(setChosenBreeds(e))
+   }
 
   return (
     <Autocomplete
@@ -60,11 +67,12 @@ export const BreedFilter: FC<IBreedFilterProps> = ({ setBreedsList }) => {
         },
       }}
       id="tags-outlined"
-      options={allBreeds}
+      options={breedsPersisted.breedList}
       getOptionLabel={(option) => option}
       onChange={(_, value) => {
-        setBreedsList(value);
+        chooseBreedHandler(value);
       }}
+      defaultValue={breedsPersisted.chosenBreeds}
       filterSelectedOptions
       renderInput={(params) => (
         <TextField
