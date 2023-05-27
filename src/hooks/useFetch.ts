@@ -37,6 +37,7 @@ export const useFetch = () => {
                 } catch (error) {
                     if (axios.isAxiosError(error)) {
                         if (error?.response?.status === 401) {
+                            sessionStorage.clear()
                             navigate("/login");
                         }
                     } else {

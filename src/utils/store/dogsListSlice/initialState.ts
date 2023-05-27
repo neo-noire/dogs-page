@@ -1,5 +1,5 @@
 import { CounterState } from "../../../types/dogSliceTypes";
-import { sizes, sortParams } from "../../../assets/data/filtersData";
+import { sizes, sortParams } from "../../data/filtersData";
 
 export const initialState: CounterState = {
     dogsArray: [],

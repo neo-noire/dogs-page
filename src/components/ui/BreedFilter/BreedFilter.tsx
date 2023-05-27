@@ -5,7 +5,7 @@ import TextField from "@mui/material/TextField";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../utils/store/store";
 import { setBreedList, setChosenBreeds } from "../../../utils/store/dogsListSlice/dogsListSlice";
-import { muiStyleAutocomplete } from "../../../assets/data/muiStyles";
+import { muiStyleAutocomplete } from "../../../utils/data/muiStyles";
 
 
 export const BreedFilter: FC = () => {

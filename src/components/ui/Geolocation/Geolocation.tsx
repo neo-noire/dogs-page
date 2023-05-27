@@ -8,7 +8,7 @@ import { textFormater } from "../../../utils/handlers/textFormatterForGeo";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../utils/store/store";
 import { setAddressList, setAddressQuery, setZipCodes } from "../../../utils/store/dogsListSlice/dogsListSlice";
-import { muiStyleAutocomplete } from "../../../assets/data/muiStyles";
+import { muiStyleAutocomplete } from "../../../utils/data/muiStyles";
 
 interface IResponse {
   results: ILocation[];

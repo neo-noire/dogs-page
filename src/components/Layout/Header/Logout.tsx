@@ -6,6 +6,7 @@ export const Logout = () => {
   const logOutHandler = async () => {
     try {
       const res = await fetchRequest.post("/auth/logout");
+      sessionStorage.clear()
       navigate("/login");
       console.log(res);
     } catch (error) {

@@ -26,6 +26,7 @@ export const Auth: FC = () => {
       };
       try {
         await fetchRequest.post<string>("/auth/login", userData);
+        sessionStorage.setItem("isAuth", "true")
         navigate("/");
       } catch (error: AxiosError | any) {
         setError(error.message);
